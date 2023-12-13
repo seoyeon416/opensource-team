@@ -1,1 +1,1 @@
-spacy==version
+spacy==3.7.2
