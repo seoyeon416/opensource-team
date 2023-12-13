@@ -3,6 +3,8 @@ from collections import Counter
 from bokeh.plotting import figure, show
 from bokeh.transform import linear_cmap
 from bokeh.palettes import Spectral11
+from bokeh.io import curdoc
+
 
 # spaCy 모델 로드
 nlp = spacy.load("en_core_web_sm")
@@ -25,10 +27,11 @@ def recommend_palette(main_topic):
         return ["#001F3F", "#0074E4", "#00A8E8", "#87CEEB"]
     elif "autumn" in main_topic.lower():
         return ["#C46210", "#8B0000", "#DAA520", "#8B4513"]
-    elif "christmas" in main_topic.lower():
-        return ["#FF0000", "#006400", "#FFFFFF", "#FFD700"]
+    elif "forest" in main_topic.lower():
+        return ["#00563F", "#8B4513", "#228B22", " #87CEEB"]
     else:
         return ["#4285F4", "#34A853", "#FBBC05", "#EA4335"]
+    
 
 # Bokeh 바 차트 생성
 p = figure(x_range=[], height=350, title="Recommended Palette for Topics",
@@ -55,10 +58,7 @@ for sentence in sentences:
            color=linear_cmap('x', Spectral11, 0, 1),
            legend_field="x")
 
-    print("\n")
+    # Bokeh 차트 표시
+    curdoc().add_root(p)
 
-# Bokeh 차트 표시
-p.legend.title = 'Topics'
-p.legend.label_text_font_size = '10pt'
-p.legend.click_policy = "hide"
-show(p)
+    print("\n")
